@@ -1,0 +1,84 @@
+.board {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 8em;
+  height: 12em;
+  width: 12em;
+  text-align: center;
+  border: 1px solid black;
+}
+.row1 {
+  height: 4em;
+  width: 12em;
+  /*border-bottom: 1px solid black;*/
+}
+.row2 {
+  height: 4em;
+  width: 12em;
+  /*border-bottom: 1px solid black;*/
+}
+.row3 {
+  height: 4em;
+  width: 12em;
+}
+.square {
+  height: 4em;
+  width: 4em;
+  float: left;
+}
+.text {
+  padding-top: 1.5em;
+}
+/*td {
+  text-align: center;
+  height: 10%;
+  width: 10%;
+}
+.top-left {
+  height: 10%;
+  width: 10%;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.top-middle {
+  height: 10%;
+  width: 10%;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.top-right {
+  height: 10%;
+  width: 10%;
+  border-bottom: 1px solid black;
+}
+.middle-left {
+  height: 10%;
+  width: 10%;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.middle-middle {
+  height: 10%;
+  width: 10%;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.middle-right {
+  height: 10%;
+  width: 10%;
+  border-bottom: 1px solid black;
+}
+.bottom-left {
+  height: 10%;
+  width: 10%;
+  border-right: 1px solid black;
+}
+.bottom-middle {
+  height: 10%;
+  width: 10%;
+  border-right: 1px solid black;
+}
+.bottom-right {
+  height: 10%;
+  width: 10%;
+}*/

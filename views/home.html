@@ -1,0 +1,53 @@
+<!-- <div class="board">
+  <div class="row1">
+    <div class="left" ng-model="topLeft" ng-click="playerMove($event)">1</div>
+    <div class="middle" ng-model="topMiddle" ng-click="playerMove($event)">2</div>
+    <div class="right" ng-model="topRight" ng-click="playerMove($event)">3</div>
+  </div>
+  <div class="row2">
+    <div class="left" ng-model="middleLeft" ng-click="playerMove($event)">4</div>
+    <div class="middle" ng-model="middleMiddle" ng-click="playerMove($event)">5</div>
+    <div class="right" ng-model="middleRight" ng-click="playerMove($event)">6</div>
+  </div>
+  <div class="row3">
+    <div class="left" ng-model="bottomLeft" ng-click="playerMove($event)">7</div>
+    <div class="middle" ng-model="bottomMiddle" ng-click="playerMove($event)">8</div>
+    <div class="right" ng-model="bottomRight" ng-click="playerMove($event)">9</div>
+  </div>
+</div> -->
+
+<div class="board">
+  <div class="row1">
+    <div class="square">
+      <div class="text corner" id="topLeft" ng-click="playerMove($event)"></div>
+    </div>
+    <div class="square">
+      <div class="text edge" id="topMiddle" ng-click="playerMove($event)">2</div>
+    </div>
+    <div class="square">
+      <div class="text corner" id="topRight" ng-click="playerMove($event)">3</div>
+    </div>
+  </div>
+  <div class="row2">
+    <div class="square">
+      <div class="text edge" id="middleLeft" ng-click="playerMove($event)">4</div>
+    </div>
+    <div class="square">
+      <div class="text center" id="middleMiddle" ng-click="playerMove($event)">5</div>
+    </div>
+    <div class="square">
+      <div class="text edge" id="middleRight" ng-click="playerMove($event)">6</div>
+    </div>
+  </div>
+  <div class="row3">
+    <div class="square">
+      <div class="text corner" id="bottomLeft"ng-click="playerMove($event)">7</div>
+    </div>
+    <div class="square">
+      <div class="text edge" id="bottomMiddle" ng-click="playerMove($event)">8</div>
+    </div>
+    <div class="square">
+      <div class="text corner" id="bottomRight" ng-click="playerMove($event)">9</div>
+    </div>
+  </div>
+</div>
