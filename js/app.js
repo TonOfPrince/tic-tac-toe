@@ -14,7 +14,8 @@ var ticTacToe = angular.module('ticTacToeApp', [
       // $(event.target).children().text('X');
       $(event.target).text('X');
       // denotes a square as already being chosen
-      $(event.target).addClass('picked');
+      console.log($(event.target));
+      // $(event.target).addClass('picked');
       console.log($(event.target).text());
       // computerMove(event);
       MainFactory.decisionSimultaion();
@@ -23,10 +24,11 @@ var ticTacToe = angular.module('ticTacToeApp', [
   }
 
   $scope.resetBoard = function() {
+    $('.square').text('');
     for (var i = 0; i < MainFactory.board[0].length; i++) {
       for (var j= 0; j < MainFactory.board.length; j++) {
         $(MainFactory.mappingObject[i +','+j]).removeClass('picked');
-        $('.square').text('');
+        MainFactory.board[i][j] = 0;
       }
     }
   }
