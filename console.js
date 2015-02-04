@@ -1,5 +1,5 @@
-var board = [[0,0,0],
-             [0,0,0],
+var board = [[0,2,1],
+             [0,2,1],
              [0,0,0]];
 
 // determines if the human player has won
@@ -60,7 +60,6 @@ var computerWins = function() {
   }
   // computer player wins by having all three spaces in middle column
   if (board[0][1] === 2 && board[1][1] === 2 && board[2][1] === 2) {
-    console.log('asdfasd');
     return true;
   }
   // computer player wins by having all three spaces in right column
@@ -126,10 +125,6 @@ var computerSpaceToggle = function(row, index) {
 // runs a simulation of every human players next move
 var humanPlayerSimulator = function(row, column) {
   var points = 0;
-  // if (board[row][column] === 2) {
-  //   computerSpaceToggle(i,j);
-  // }
-
   for (var i = 0; i < board[0].length; i++) {
     for (var j= 0; j < board.length; j++) {
       if (board[i][j] === 0 && !gameOver()) {
@@ -162,7 +157,6 @@ var computerPlayerSimulator = function(row, column) {
         } else if (computerWins()) {
           points += 1;
         } else if (fullBoard()) {
-          // return 0 + points;
           console.log('full board')
         } else {
           points+= humanPlayerSimulator(i,j);
