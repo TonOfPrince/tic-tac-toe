@@ -221,14 +221,20 @@ var ticTacToe = angular.module('ticTacToeApp', [
     var max = Number.NEGATIVE_INFINITY;
     var row = 0;
     var column = 0;
-    var simulationResult = max;
     for (var i = 0; i < board[0].length; i++) {
       for (var j= 0; j < board.length; j++) {
         if (board[i][j] === 0 && !gameOver()) {
+          var simulationResult = 0;
           computerSpaceToggle(i,j)
-          var simulationResult = humanPlayerSimulator(i,j);
-          computerSpaceToggle(i,j)
-          // console.log(simulationResult);
+          if (computerWins()) {
+            simulationResult = Number.POSITIVE_INFINITY;
+          } else if (fullBoard()) {
+            console.log('full board')
+          } else {
+            simulationResult = humanPlayerSimulator(i,j);
+          }
+          computerSpaceToggle(i,j);
+          console.log(simulationResult);
           if (simulationResult > max) {
             max = simulationResult;
             row = i;
@@ -238,24 +244,18 @@ var ticTacToe = angular.module('ticTacToeApp', [
       }
     }
     computerSpaceToggle(row, column);
-    $(mappingObject[row +','+column]).text('O');
+    $(mappingObject[row +','+column]).children().text('O');
     $(mappingObject[row +','+column]).addClass('picked');
 
   }
 
-	// var computerMove = function(event) {
- //    if ($(event.target).hasClass('center')) {
- //      $('#topLeft').text('O');
- //    }
-	// }
-
   $scope.playerMove = function(event) {
     if (playerTurn && !$(event.target).hasClass('picked')) {
-      // console.log(angular.element(event.srcElement));
-      // console.log($(event.target).hasClass('edge'));
-      console.log($(event.target).context.id);
-      board[mappingRow[$(event.target).context.id]][mappingColumn[$(event.target).context.id]];
-      $(event.target).text('X');
+      console.log($(event.target));
+      board[mappingRow[$(event.target).context.id]][mappingColumn[$(event.target).context.id]] = 1;
+      // console.log($(event.target).children());
+      $(event.target).children().text('X');
+      // $(event.target).text('X');
       // denotes a square as already being chosen
       $(event.target).addClass('picked');
       console.log($(event.target).text());

@@ -25,9 +25,13 @@
   height: 4em;
   width: 4em;
   float: left;
+  position: relative;
+  z-index: 1;
 }
 .text {
   padding-top: 1.5em;
+  position: relative;
+  z-index: 0;
 }
 /*td {
   text-align: center;

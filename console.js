@@ -1,5 +1,5 @@
-var board = [[0,2,1],
-             [0,2,1],
+var board = [[0,0,0],
+             [0,0,0],
              [0,0,0]];
 
 // determines if the human player has won
@@ -129,6 +129,7 @@ var humanPlayerSimulator = function(row, column) {
     for (var j= 0; j < board.length; j++) {
       if (board[i][j] === 0 && !gameOver()) {
         humanSpaceToggle(i,j);
+        // console.log(board.toString());
         if (humanWins()) {
           points -= 1;
         } else if (computerWins()) {
@@ -152,6 +153,7 @@ var computerPlayerSimulator = function(row, column) {
     for (var j= 0; j < board.length; j++) {
       if (board[i][j] === 0 && !gameOver()) {
         computerSpaceToggle(i,j);
+        // console.log(board.toString());
         if (humanWins()) {
           points -= 1;
         } else if (computerWins()) {
@@ -173,13 +175,20 @@ var decisionSimultaion = function() {
   var max = Number.NEGATIVE_INFINITY;
   var row = 0;
   var column = 0;
-  var simulationResult = max;
   for (var i = 0; i < board[0].length; i++) {
     for (var j= 0; j < board.length; j++) {
       if (board[i][j] === 0 && !gameOver()) {
+        var simulationResult = 0;
         computerSpaceToggle(i,j)
-        var simulationResult = humanPlayerSimulator(i,j);
-        computerSpaceToggle(i,j)
+        // console.log(board.toString())
+        if (computerWins()) {
+          simulationResult = Number.POSITIVE_INFINITY;
+        } else if (fullBoard()) {
+          console.log('full board')
+        } else {
+          simulationResult = humanPlayerSimulator(i,j);
+        }
+        computerSpaceToggle(i,j);
         console.log(simulationResult);
         if (simulationResult > max) {
           max = simulationResult;
@@ -191,5 +200,5 @@ var decisionSimultaion = function() {
   }
   computerSpaceToggle(row, column);
 }
-
+// console.log(board.toString())
 decisionSimultaion();
