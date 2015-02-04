@@ -44,6 +44,10 @@
   vertical-align: middle;
   /*z-index: 0;*/
 }
+.newGame {
+  text-align: center;
+  margin-top: 3em;
+}
 /*td {
   text-align: center;
   height: 10%;

@@ -21,6 +21,16 @@ var ticTacToe = angular.module('ticTacToeApp', [
       MainFactory.playerTurn = true;
     }
   }
+
+  $scope.resetBoard = function() {
+    for (var i = 0; i < MainFactory.board[0].length; i++) {
+      for (var j= 0; j < MainFactory.board.length; j++) {
+        $(MainFactory.mappingObject[i +','+j]).removeClass('picked');
+        $('.square').text('');
+      }
+    }
+  }
+
 })
 .factory('MainFactory', function() {
     // gives the human player the first turn
@@ -288,6 +298,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
       playerTurn: playerTurn,
       mappingRow: mappingRow,
       mappingColumn: mappingColumn,
+      mappingObject: mappingObject,
       decisionSimultaion: decisionSimultaion
     }
 })
