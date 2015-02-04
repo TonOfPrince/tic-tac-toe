@@ -245,34 +245,43 @@ var ticTacToe = angular.module('ticTacToeApp', [
       var max = Number.NEGATIVE_INFINITY;
       var row = 0;
       var column = 0;
-      for (var i = 0; i < board[0].length; i++) {
-        for (var j= 0; j < board.length; j++) {
-          if (board[i][j] === 0 && !gameOver()) {
-            var simulationResult = 0;
-            computerSpaceToggle(i,j)
-            if (computerWins()) {
-              simulationResult = Number.POSITIVE_INFINITY;
-            } else if (fullBoard()) {
-              console.log('full board')
-            } else {
-              simulationResult = humanPlayerSimulator(i,j);
-            }
-            computerSpaceToggle(i,j);
-            console.log(simulationResult);
-            if (simulationResult > max) {
-              max = simulationResult;
-              row = i;
-              column = j;
+      if (gameOver()) {
+        for (var i = 0; i < board[0].length; i++) {
+          for (var j= 0; j < board.length; j++) {
+            $(mappingObject[i +','+j]).addClass('picked');
+          }
+        }
+      } else {
+        for (var i = 0; i < board[0].length; i++) {
+          for (var j= 0; j < board.length; j++) {
+            if (board[i][j] === 0 && !gameOver()) {
+              var simulationResult = 0;
+              computerSpaceToggle(i,j)
+              if (computerWins()) {
+                simulationResult = Number.POSITIVE_INFINITY;
+              } else if (fullBoard()) {
+                console.log('full board')
+              } else {
+                simulationResult = humanPlayerSimulator(i,j);
+              }
+              computerSpaceToggle(i,j);
+              console.log(simulationResult);
+              if (simulationResult > max) {
+                max = simulationResult;
+                row = i;
+                column = j;
+              }
             }
           }
         }
+        computerSpaceToggle(row, column);
+        // $(mappingObject[row +','+column]).children().text('O');
+        $(mappingObject[row +','+column]).text('O');
+        $(mappingObject[row +','+column]).addClass('picked');
       }
-      computerSpaceToggle(row, column);
-      // $(mappingObject[row +','+column]).children().text('O');
-      $(mappingObject[row +','+column]).text('O');
-      $(mappingObject[row +','+column]).addClass('picked');
-
     }
+
+
 
     return {
       board: board,
