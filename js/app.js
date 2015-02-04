@@ -219,7 +219,6 @@ var ticTacToe = angular.module('ticTacToeApp', [
             } else if (computerWins()) {
               points += 1;
             } else if (fullBoard()) {
-              console.log('full board');
             } else {
               points += computerPlayerSimulator(i,j);
             }
@@ -242,7 +241,6 @@ var ticTacToe = angular.module('ticTacToeApp', [
             } else if (computerWins()) {
               points += 1;
             } else if (fullBoard()) {
-              console.log('full board')
             } else {
               points+= humanPlayerSimulator(i,j);
             }
@@ -274,7 +272,6 @@ var ticTacToe = angular.module('ticTacToeApp', [
               if (computerWins()) {
                 simulationResult = Number.POSITIVE_INFINITY;
               } else if (fullBoard()) {
-                console.log('full board')
               } else {
                 simulationResult = humanPlayerSimulator(i,j);
               }
