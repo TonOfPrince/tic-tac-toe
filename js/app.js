@@ -4,7 +4,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
 
 .controller('MainCtrl', function($scope, MainFactory) {
 
-
+  // action for human player making a move
   $scope.playerMove = function(event) {
     if (MainFactory.playerTurn && !$(event.target).hasClass('picked')) {
       MainFactory.playerTurn = false;
@@ -23,6 +23,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
     }
   }
 
+  // action for clearing the board for a new game
   $scope.resetBoard = function() {
     $('.square').text('');
     for (var i = 0; i < MainFactory.board[0].length; i++) {
@@ -161,15 +162,15 @@ var ticTacToe = angular.module('ticTacToeApp', [
 
     // checks to see if every spot on the board is taken
     var fullBoard = function() {
-      if (board[0,0] === 1 || board[0,0] === 2 &&
-          board[0,1] === 1 || board[0,1] === 2 &&
-          board[0,2] === 1 || board[0,2] === 2 &&
-          board[1,0] === 1 || board[1,0] === 2 &&
-          board[1,1] === 1 || board[1,1] === 2 &&
-          board[1,2] === 1 || board[1,2] === 2 &&
-          board[2,0] === 1 || board[2,0] === 2 &&
-          board[2,1] === 1 || board[2,1] === 2 &&
-          board[2,2] === 1 || board[2,1] === 2) {
+      if (board[0][0] !== 0 &&
+          board[0][1] !== 0 &&
+          board[0][2] !== 0 &&
+          board[1][0] !== 0 &&
+          board[1][1] !== 0 &&
+          board[1][2] !== 0 &&
+          board[2][0] !== 0 &&
+          board[2][1] !== 0 &&
+          board[2][2] !== 0 ) {
         return true;
       }
       return false;
@@ -257,6 +258,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
       var max = Number.NEGATIVE_INFINITY;
       var row = 0;
       var column = 0;
+      // if game is over, all spaces can no longer be picked by human player
       if (gameOver()) {
         for (var i = 0; i < board[0].length; i++) {
           for (var j= 0; j < board.length; j++) {
