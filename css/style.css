@@ -1,26 +1,26 @@
 /******* Header Settings ********/
 .header {
-  text-align: center;
   margin-top: 2em;
+  text-align: center;
 }
 
 /******* End Result Settings ********/
 .result {
-  text-align: center;
   position: absolute;
-  left: 0;
-  right: 0;
   margin-top: 2em;
+  text-align: center;
+  right: 0;
+  left: 0;
 }
 
 /******* Board Settings ********/
 .board {
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 6em;
   height: 24em;
   width: 24em;
   text-align: center;
+  margin-top: 6em;
+  margin-right: auto;
+  margin-left: auto;
 }
   .square {
     height: 7.8em;
@@ -37,7 +37,7 @@
 /******* New Game Button Settings ********/
 .newGame {
   margin-top: 3em;
-  display: block;
-  margin-left: auto;
   margin-right: auto;
+  margin-left: auto;
+  display: block;
 }
