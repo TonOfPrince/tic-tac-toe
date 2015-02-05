@@ -311,4 +311,8 @@ var ticTacToe = angular.module('ticTacToeApp', [
       templateUrl: 'views/home.html',
       controller: 'MainCtrl'
     })
+    .state('docs', {
+      url: '/docs',
+      templateUrl: 'docs/js/app.js.html'
+    })
 })
