@@ -4,28 +4,31 @@ var ticTacToe = angular.module('ticTacToeApp', [
 
 .controller('MainCtrl', function($scope, MainFactory) {
 
+  // extends factory to the scope
   angular.extend($scope, MainFactory);
   // action for human player making a move
   $scope.playerMove = function(event) {
+    // if the game is over, player cannot choose a space
     if (MainFactory.gameOver()) {
       for (var i = 0; i < MainFactory.board[0].length; i++) {
         for (var j= 0; j < MainFactory.board.length; j++) {
           $(MainFactory.mappingObject[i +','+j]).addClass('picked');
         }
       }
+    // player's marker is put if game is on-going
     } else if (MainFactory.playerTurn && !$(event.target).hasClass('picked')) {
       MainFactory.playerTurn = false;
       MainFactory.board[MainFactory.mappingRow[$(event.target).context.id]][MainFactory.mappingColumn[$(event.target).context.id]] = 1;
-      $(event.target).text('X');
-      // $(event.target).addClass('fa fa-times');
+      $(event.target).children().text('X');
       MainFactory.decisionSimultaion();
       MainFactory.playerTurn = true;
     }
   }
 
-  // action for clearing the board for a new game
+  // clears the board for a new game
   $scope.resetBoard = function() {
-    $('.square').text('');
+    // $('.square').text('');
+    $('i').text('');
     for (var i = 0; i < MainFactory.board[0].length; i++) {
       for (var j= 0; j < MainFactory.board.length; j++) {
         $(MainFactory.mappingObject[i +','+j]).removeClass('picked');
@@ -34,6 +37,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
     }
   }
 
+  // checks to see if there is a tie
   $scope.tie = function () {
     return MainFactory.fullBoard() && !MainFactory.computerWins()
   }
@@ -48,10 +52,8 @@ var ticTacToe = angular.module('ticTacToeApp', [
       [0,0,0],
       [0,0,0]
     ];
-    var lose = false;
-    var tie = false;
 
-    // map board decision to display
+    // map board's squares to display
     var mappingObject = {
       '0,0' : '#topLeft',
       '0,1' : '#topMiddle',
@@ -93,35 +95,21 @@ var ticTacToe = angular.module('ticTacToeApp', [
     // determines if the human player has won
     var humanWins = function() {
       // human player wins by having all three spaces in the top row
-      if (board[0][0] === 1 && board[0][1] === 1 && board[0][2] === 1) {
-        return true;
-      }
-      // human player wins by having all three spaces in the middle row
-      if (board[1][0] === 1 && board[1][1] === 1 && board[1][2] === 1) {
-        return true;
-      }
+      if ((board[0][0] === 1 && board[0][1] === 1 && board[0][2] === 1) ||
+          // human player wins by having all three spaces in the middle row
+          (board[1][0] === 1 && board[1][1] === 1 && board[1][2] === 1) ||
       // human player wins by having all three spaces in the bottom row
-      if (board[2][0] === 1 && board[2][1] === 1 && board[2][2] === 1) {
-        return true;
-      }
+          (board[2][0] === 1 && board[2][1] === 1 && board[2][2] === 1) ||
       // human player wins by having all three spaces in the left column
-      if (board[0][0] === 1 && board[1][0] === 1 && board[2][0] === 1) {
-        return true;
-      }
+          (board[0][0] === 1 && board[1][0] === 1 && board[2][0] === 1) ||
       // human player wins by having all three spaces in the middle column
-      if (board[0][1] === 1 && board[1][1] === 1 && board[2][1] === 1) {
-        return true;
-      }
+          (board[0][1] === 1 && board[1][1] === 1 && board[2][1] === 1) ||
       // human player wins by having all three spaces in the right column
-      if (board[0][2] === 1 && board[1][2] === 1 && board[2][2] === 1) {
-        return true;
-      }
+          (board[0][2] === 1 && board[1][2] === 1 && board[2][2] === 1) ||
       // human player wins by having all three spaces in the diagonal from top left to bottom right
-      if (board[0][0] === 1 && board[1][1] === 1 && board[2][2] === 1) {
-        return true;
-      }
+          (board[0][0] === 1 && board[1][1] === 1 && board[2][2] === 1) ||
       // human player wins by having all three spaces in the diagonal from top right to bottom left
-      if (board[0][2] === 1 && board[1][1] === 1 && board[2][0] === 1) {
+          (board[0][2] === 1 && board[1][1] === 1 && board[2][0] === 1)) {
         return true;
       }
       // otherwise human player has not won
@@ -201,7 +189,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
       }
     }
 
-    // runs a simulation of every human players next move
+    // runs a simulation of every possible next human players move
     var humanPlayerSimulator = function() {
       var min = Number.POSITIVE_INFINITY;
       for (var i = 0; i < board[0].length; i++) {
@@ -274,7 +262,9 @@ var ticTacToe = angular.module('ticTacToeApp', [
           }
         }
         computerSpaceToggle(row, column);
-        $(mappingObject[row +','+column]).text('O');
+        // $(mappingObject[row +','+column]).text('O');
+        $(mappingObject[row +','+column]).children().text('O');
+
         $(mappingObject[row +','+column]).addClass('picked');
       }
     }
@@ -297,9 +287,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
       mappingObject: mappingObject,
       decisionSimultaion: decisionSimultaion,
       computerWins: computerWins,
-      fullBoard: fullBoard,
-      lose: lose,
-      tie: tie
+      fullBoard: fullBoard
     }
 })
 .config(function($stateProvider, $urlRouterProvider) {
