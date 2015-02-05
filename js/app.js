@@ -6,11 +6,16 @@ var ticTacToe = angular.module('ticTacToeApp', [
 
   // action for human player making a move
   $scope.playerMove = function(event) {
-    if (MainFactory.playerTurn && !$(event.target).hasClass('picked')) {
+    if (MainFactory.gameOver()) {
+      for (var i = 0; i < MainFactory.board[0].length; i++) {
+        for (var j= 0; j < MainFactory.board.length; j++) {
+          $(MainFactory.mappingObject[i +','+j]).addClass('picked');
+        }
+      }
+    } else if (MainFactory.playerTurn && !$(event.target).hasClass('picked')) {
       MainFactory.playerTurn = false;
       console.log($(event.target));
       MainFactory.board[MainFactory.mappingRow[$(event.target).context.id]][MainFactory.mappingColumn[$(event.target).context.id]] = 1;
-      // console.log($(event.target).children());
       // $(event.target).children().text('X');
       $(event.target).text('X');
       // denotes a square as already being chosen
@@ -180,9 +185,6 @@ var ticTacToe = angular.module('ticTacToeApp', [
     var gameOver = function() {
       // game is over if either the computer or human wins or the board is full
       if (computerWins() || humanWins() || fullBoard()) {
-        // console.log('comp', computerWins());
-        console.log('human', humanWins());
-        // console.log('full', fullBoard());
         return true;
       }
       // otherwise game is not over
@@ -208,94 +210,228 @@ var ticTacToe = angular.module('ticTacToeApp', [
     }
 
     // runs a simulation of every human players next move
+    // var humanPlayerSimulator = function() {
+    //   // var points = 0;
+    //   // var min = Number.POSITIVE_INFINITY;
+    //   var max = Number.NEGATIVE_INFINITY;
+    //   for (var i = 0; i < board[0].length; i++) {
+    //     for (var j= 0; j < board.length; j++) {
+    //       if (board[i][j] === 0 && !gameOver()) {
+    //         humanSpaceToggle(i,j);
+    //         if (humanWins()) {
+    //           // points -= 1;
+    //           if (max !== 1) {
+    //             max = -1;
+    //           }
+    //           // min = -1;
+    //         } else if (computerWins()) {
+    //           // points += 1;
+    //           // if (min !== -1) {
+    //           //   min = 1;
+    //           // }
+    //           max = 1
+    //         } else if (fullBoard()) {
+    //         } else {
+    //           // points += computerPlayerSimulator(i,j);
+    //           // min = computerPlayerSimulator(i,j);
+    //           max = computerPlayerSimulator(i,j);
+    //         }
+    //         humanSpaceToggle(i,j);
+    //       }
+    //     }
+    //   }
+    //   return max
+    //   // return min;
+    //   // return points;
+    // }
+
     var humanPlayerSimulator = function() {
-      var points = 0;
+      var min = Number.POSITIVE_INFINITY;
       for (var i = 0; i < board[0].length; i++) {
-        for (var j= 0; j < board.length; j++) {
+        for (var j = 0; j < board.length; j++) {
           if (board[i][j] === 0 && !gameOver()) {
             humanSpaceToggle(i,j);
+            // console.log(board.toString());
             if (humanWins()) {
-              points -= 1;
-            } else if (computerWins()) {
-              points += 1;
-            } else if (fullBoard()) {
-            } else {
-              points += computerPlayerSimulator(i,j);
+              min = Number.NEGATIVE_INFINITY;
+            } else if (!fullBoard()) {
+              var humanTester = computerPlayerSimulator();
+              if (humanTester < min) {
+                min = humanTester;
+              }
             }
             humanSpaceToggle(i,j);
           }
         }
       }
-      return points;
+      return min;
     }
 
     // runs a simulation of every possible next computer player move
     var computerPlayerSimulator = function() {
-      var points = 0;
+      var max = Number.NEGATIVE_INFINITY;
       for (var i = 0; i < board[0].length; i++) {
-        for (var j= 0; j < board.length; j++) {
+        for (var j = 0; j < board.length; j++) {
           if (board[i][j] === 0 && !gameOver()) {
             computerSpaceToggle(i,j);
-            if (humanWins()) {
-              points -= 1;
-            } else if (computerWins()) {
-              points += 1;
-            } else if (fullBoard()) {
-            } else {
-              points+= humanPlayerSimulator(i,j);
+            // console.log(board.toString());
+            if (computerWins()) {
+              max = Number.POSITIVE_INFINITY;
+            } else if (!fullBoard()) {
+              var computerTester = humanPlayerSimulator();
+              if (computerTester > max) {
+                max = computerTester;
+              }
             }
-            computerSpaceToggle(i,j);
+          computerSpaceToggle(i,j);
           }
         }
       }
-      return points;
+      return max;
     }
 
-    // decides where to put the next piece based off of best outcome of simulation
     var decisionSimultaion = function() {
-      var max = Number.NEGATIVE_INFINITY;
-      var row = 0;
-      var column = 0;
-      // if game is over, all spaces can no longer be picked by human player
+      var row = -1;
+      var column = -1;
       if (gameOver()) {
-        for (var i = 0; i < board[0].length; i++) {
-          for (var j= 0; j < board.length; j++) {
-            $(mappingObject[i +','+j]).addClass('picked');
-          }
-        }
+        deactivateBoard();
       } else {
+        var max = Number.NEGATIVE_INFINITY;
         for (var i = 0; i < board[0].length; i++) {
-          for (var j= 0; j < board.length; j++) {
+          for (var j = 0; j < board.length; j++) {
             if (board[i][j] === 0 && !gameOver()) {
-              var simulationResult = 0;
-              computerSpaceToggle(i,j)
-              if (computerWins()) {
-                simulationResult = Number.POSITIVE_INFINITY;
-              } else if (fullBoard()) {
-              } else {
-                simulationResult = humanPlayerSimulator(i,j);
-              }
               computerSpaceToggle(i,j);
-              console.log(simulationResult);
-              if (simulationResult > max) {
-                max = simulationResult;
+              console.log(board.toString());
+              if (computerWins()) {
+                max = Number.POSITIVE_INFINITY;
                 row = i;
                 column = j;
+              } else if (!fullBoard()) {
+                var decisionTester = humanPlayerSimulator();
+                if (decisionTester > max) {
+                  max = decisionTester;
+                  row = i;
+                  column = j;
+                }
               }
+            computerSpaceToggle(i,j);
             }
           }
         }
         computerSpaceToggle(row, column);
-        // $(mappingObject[row +','+column]).children().text('O');
         $(mappingObject[row +','+column]).text('O');
         $(mappingObject[row +','+column]).addClass('picked');
       }
     }
 
+    var deactivateBoard = function() {
+      for (var i = 0; i < board[0].length; i++) {
+        for (var j= 0; j < board.length; j++) {
+          $(mappingObject[i +','+j]).addClass('picked');
+        }
+      }
+    }
+    // var computerPlayerSimulator = function() {
+    //   // var points = 0;
+    //   // var min = Number.POSITIVE_INFINITY;
+    //   var max = Number.NEGATIVE_INFINITY;
+    //   for (var i = 0; i < board[0].length; i++) {
+    //     for (var j= 0; j < board.length; j++) {
+    //       if (board[i][j] === 0 && !gameOver()) {
+    //         computerSpaceToggle(i,j);
+    //         if (humanWins()) {
+    //           // points -= 1;
+    //           // if (max !== 1) {
+    //           //   max = -1;
+    //           // }
+    //           min = -1;
+    //         } else if (computerWins()) {
+    //           // points += 1;
+    //           // if (max !== -1) {
+    //           // max = 1;
+    //           if (min !== -1) {
+    //             min = 1;
+    //           }
+    //           // }
+    //         } else if (fullBoard()) {
+    //         } else {
+    //           // points += humanPlayerSimulator(i,j);
+    //           // max = humanPlayerSimulator(i,j);
+    //           min = humanPlayerSimulator(i,j);
 
+    //         }
+    //         computerSpaceToggle(i,j);
+    //       }
+    //     }
+    //   }
+    //   return min;
+    //   // return max;
+    //   // return points;
+    // }
+
+    // decides where to put the next piece based off of best outcome of simulation
+    // var decisionSimultaion = function() {
+    //   var max = Number.NEGATIVE_INFINITY;
+    //   var row = 0;
+    //   var column = 0;
+    //   // if game is over, all spaces can no longer be picked by human player
+    //   if (gameOver()) {
+    //     for (var i = 0; i < board[0].length; i++) {
+    //       for (var j= 0; j < board.length; j++) {
+    //         $(mappingObject[i +','+j]).addClass('picked');
+    //       }
+    //     }
+    //     return;
+    //   }
+
+    //   // var miniMax = function( computerPlayer) {
+
+    //   // }
+    //   //  else if (board.toString() === '1,0,0,0,2,0,0,0,1' ||
+    //   //            board.toString() === '0,0,1,0,2,0,1,0,0') {
+    //   //     row = 0;
+    //   //     column = 1;
+
+    //   // } else if (board[0][2] === 0 &&
+    //   //           (board[2][0] === 1 && board[1][1] === 1 ||
+    //   //            board[0][0] === 1 && board[0][1] === 1 ||
+    //   //            board[1][2] === 1 && board[2][2] === 1)) {
+    //   //   row = 0;
+    //   //   column = 2;
+    //   // }
+    //   else {
+    //     console.log('reached?');
+    //     for (var i = 0; i < board[0].length; i++) {
+    //       for (var j= 0; j < board.length; j++) {
+    //         if (board[i][j] === 0 && !gameOver()) {
+    //           var simulationResult = 0;
+    //           computerSpaceToggle(i,j)
+    //           if (computerWins()) {
+    //             simulationResult = Number.POSITIVE_INFINITY;
+    //           } else if (fullBoard()) {
+    //           } else {
+    //             simulationResult = humanPlayerSimulator(i,j);
+    //           }
+    //           computerSpaceToggle(i,j);
+    //           console.log(simulationResult);
+    //           if (simulationResult > max) {
+    //             max = simulationResult;
+    //             row = i;
+    //             column = j;
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    //   computerSpaceToggle(row, column);
+    //   // $(mappingObject[row +','+column]).children().text('O');
+    //   $(mappingObject[row +','+column]).text('O');
+    //   $(mappingObject[row +','+column]).addClass('picked');
+    // }
 
     return {
       board: board,
+      gameOver: gameOver,
       playerTurn: playerTurn,
       mappingRow: mappingRow,
       mappingColumn: mappingColumn,
