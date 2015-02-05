@@ -33,11 +33,10 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  line-height: 8em;
+
   /*z-index: 1;*/
 
-}
-span{
-  line-height:8em;
 }
 .text {
   /*padding-top: 1.5em;*/
