@@ -20,35 +20,23 @@ i {
   height: 24em;
   width: 24em;
   text-align: center;
-  /*border: 1px solid black;*/
   position: relative;
   left: 0;
   right: 0;
 }
 .square {
-  /*height: 4em;
-  width: 4em;*/
   height: 7.8em;
   width: 7.8em;
   border: .1em solid black;
-  /*border-right: .3em solid black;*/
   float: left;
   position: relative;
   display: inline-block;
   vertical-align: middle;
   line-height: 8em;
-  /*font-size: 200%;*/
-
-  /*z-index: 1;*/
-
-}
-.text {
-  /*padding-top: 1.5em;*/
-  position: relative;
-  vertical-align: middle;
-  /*z-index: 0;*/
 }
 .newGame {
-  text-align: center;
   margin-top: 3em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
