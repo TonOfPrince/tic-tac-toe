@@ -16,8 +16,8 @@ var ticTacToe = angular.module('ticTacToeApp', [
     } else if (MainFactory.playerTurn && !$(event.target).hasClass('picked')) {
       MainFactory.playerTurn = false;
       MainFactory.board[MainFactory.mappingRow[$(event.target).context.id]][MainFactory.mappingColumn[$(event.target).context.id]] = 1;
-      // $(event.target).text('X');
-      $(event.target).addClass('fa fa-times');
+      $(event.target).text('X');
+      // $(event.target).addClass('fa fa-times');
       MainFactory.decisionSimultaion();
       MainFactory.playerTurn = true;
     }
