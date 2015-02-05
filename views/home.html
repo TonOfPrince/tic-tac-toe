@@ -1,5 +1,6 @@
-<div class="header">Unbeatable Tic-Tac-Toe
-</div>
+<div class="header">Unbeatable Tic-Tac-Toe</div>
+<div class="result" ng-show="computerWins()">You Lose!</div>
+<div class="result" ng-show="tie()">It's a Tie!</div>
 <div class="board">
   <div class="row1">
     <div class="square" id="topLeft" ng-click="playerMove($event)">

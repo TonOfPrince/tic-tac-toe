@@ -4,6 +4,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
 
 .controller('MainCtrl', function($scope, MainFactory) {
 
+  angular.extend($scope, MainFactory);
   // action for human player making a move
   $scope.playerMove = function(event) {
     if (MainFactory.gameOver()) {
@@ -32,6 +33,10 @@ var ticTacToe = angular.module('ticTacToeApp', [
     }
   }
 
+  $scope.tie = function () {
+    return MainFactory.fullBoard() && !MainFactory.computerWins()
+  }
+
 })
 .factory('MainFactory', function() {
     // gives the human player the first turn
@@ -42,6 +47,8 @@ var ticTacToe = angular.module('ticTacToeApp', [
       [0,0,0],
       [0,0,0]
     ];
+    var lose = false;
+    var tie = false;
 
     // map board decision to display
     var mappingObject = {
@@ -123,35 +130,22 @@ var ticTacToe = angular.module('ticTacToeApp', [
     // determines if the computer player has won
     var computerWins = function() {
       // computer player wins by having all three spaces in top
-      if (board[0][0] === 2 && board[0][1] === 2 && board[0][2] === 2) {
-        return true;
-      }
+      if ((board[0][0] === 2 && board[0][1] === 2 && board[0][2] === 2) ||
       // computer player wins by having all three spaces in middle
-      if (board[1][0] === 2 && board[1][1] === 2 && board[1][2] === 2) {
-        return true;
-      }
+          (board[1][0] === 2 && board[1][1] === 2 && board[1][2] === 2) ||
       // computer player wins by having all three spaces in bottom
-      if (board[2][0] === 2 && board[2][1] === 2 && board[2][2] === 2) {
-        return true;
-      }
+          (board[2][0] === 2 && board[2][1] === 2 && board[2][2] === 2) ||
       // computer player wins by having all three spaces in left column
-      if (board[0][0] === 2 && board[1][0] === 2 && board[2][0] === 2) {
-        return true;
-      }
+          (board[0][0] === 2 && board[1][0] === 2 && board[2][0] === 2) ||
       // computer player wins by having all three spaces in middle column
-      if (board[0][1] === 2 && board[1][1] === 2 && board[2][1] === 2) {
-        return true;
-      }
+          (board[0][1] === 2 && board[1][1] === 2 && board[2][1] === 2) ||
       // computer player wins by having all three spaces in right column
-      if (board[0][2] === 2 && board[1][2] === 2 && board[2][2] === 2) {
-        return true;
-      }
+          (board[0][2] === 2 && board[1][2] === 2 && board[2][2] === 2) ||
       // computer player wins by having all three spaces in diagonal from top left to bottom right
-      if (board[0][0] === 2 && board[1][1] === 2 && board[2][2] === 2) {
-        return true;
-      }
+          (board[0][0] === 2 && board[1][1] === 2 && board[2][2] === 2) ||
       // computer player wins by having all three spaces in diagonal from top right to bottom left
-      if (board[0][2] === 2 && board[1][1] === 2 && board[2][0] === 2) {
+          (board[0][2] === 2 && board[1][1] === 2 && board[2][0] === 2))
+       {
         return true;
       }
       // otherwise computer player has not won
@@ -169,6 +163,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
           board[2][0] !== 0 &&
           board[2][1] !== 0 &&
           board[2][2] !== 0 ) {
+        tie = true;
         return true;
       }
       return false;
@@ -178,6 +173,9 @@ var ticTacToe = angular.module('ticTacToeApp', [
     var gameOver = function() {
       // game is over if either the computer or human wins or the board is full
       if (computerWins() || humanWins() || fullBoard()) {
+        if (computerWins()) {
+          lose = true;
+        }
         return true;
       }
       // otherwise game is not over
@@ -296,7 +294,11 @@ var ticTacToe = angular.module('ticTacToeApp', [
       mappingRow: mappingRow,
       mappingColumn: mappingColumn,
       mappingObject: mappingObject,
-      decisionSimultaion: decisionSimultaion
+      decisionSimultaion: decisionSimultaion,
+      computerWins: computerWins,
+      fullBoard: fullBoard,
+      lose: lose,
+      tie: tie
     }
 })
 .config(function($stateProvider, $urlRouterProvider) {
