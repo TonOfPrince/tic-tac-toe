@@ -6,7 +6,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
   // extends factory to the scope
   angular.extend($scope, MainFactory);
 
-  /******* Functions Called in HTML *******/
+  /* Functions Called in HTML */
 
   // action for human player making a move
   $scope.playerMove = function(event) {
@@ -46,7 +46,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
 })
 .factory('MainFactory', function() {
 
-  /******* Initializing Variables *******/
+  /* Initializing Variables */
 
   // gives the human player the first turn
   var playerTurn = true;
@@ -58,7 +58,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
     [0,0,0]
   ];
 
-/******* Mapping Objects *******/
+/* Mapping Objects */
 
   // map board's squares to display
   var mappingObject = {
@@ -99,7 +99,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
     'bottomRight' : 2
   }
 
-  /******* Functions Determining End Game *******/
+  /* Functions Determining End Game */
 
   // determines if the human player has won
   var humanWins = function() {
@@ -176,7 +176,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
     return false;
   }
 
-  /******* Toggling Marker Functions *******/
+  /* Toggling Marker Functions */
 
   // toggles the human player's marking on the space given by row and index
   var humanSpaceToggle = function(row, index) {
@@ -196,7 +196,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
     }
   }
 
-  /******* Simulator Functions *******/
+  /* Simulator Functions */
 
   // runs a simulation of every possible next human players move
   var humanPlayerSimulator = function() {
@@ -277,7 +277,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
     }
   }
 
-/******* Reset Functions *******/
+/* Reset Functions */
 
   // deactivates board, so human player cannot make moves
   var deactivateBoard = function() {
@@ -288,7 +288,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
     }
   }
 
-  /******* Factory Return *******/
+  /* Factory Return */
 
   return {
     board: board,
@@ -303,7 +303,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
   }
 })
 
-/******* Angular SPA Routing *******/
+/* Angular SPA Routing */
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
 
