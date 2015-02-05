@@ -22,18 +22,6 @@
   left: 0;
   right: 0;
 }
-.row1 {
-  height: 8em;
-  width: 24em;
-}
-.row2 {
-  height: 8em;
-  width: 24em;
-}
-.row3 {
-  height: 8em;
-  width: 24em;
-}
 .square {
   /*height: 4em;
   width: 4em;*/
@@ -41,16 +29,6 @@
   width: 7.8em;
   border: .1em solid black;
   /*border-right: .3em solid black;*/
-  float: left;
-  position: relative;
-  display: inline-block;
-  /*z-index: 1;*/
-
-}
-.center {
-  height: 3.8em;
-  width: 3.8em;
-  border: .1em solid black;
   float: left;
   position: relative;
   display: inline-block;
