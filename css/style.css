@@ -14,29 +14,43 @@
   margin-right: auto;
   margin-left: auto;
   margin-top: 6em;
-  height: 12em;
-  width: 12em;
+  height: 24em;
+  width: 24em;
   text-align: center;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   position: relative;
   left: 0;
   right: 0;
 }
 .row1 {
-  height: 4em;
-  width: 12em;
+  height: 8em;
+  width: 24em;
 }
 .row2 {
-  height: 4em;
-  width: 12em;
+  height: 8em;
+  width: 24em;
 }
 .row3 {
-  height: 4em;
-  width: 12em;
+  height: 8em;
+  width: 24em;
 }
 .square {
-  height: 4em;
-  width: 4em;
+  /*height: 4em;
+  width: 4em;*/
+  height: 7.8em;
+  width: 7.8em;
+  border: .1em solid black;
+  /*border-right: .3em solid black;*/
+  float: left;
+  position: relative;
+  display: inline-block;
+  /*z-index: 1;*/
+
+}
+.center {
+  height: 3.8em;
+  width: 3.8em;
+  border: .1em solid black;
   float: left;
   position: relative;
   display: inline-block;
