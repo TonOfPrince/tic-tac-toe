@@ -4,7 +4,8 @@ var app = express();
 var done = false;
 
 //port
-var port = 3000;
+// var port = 3000;
+var port = process.env.PORT || 3000;
 
 //ip
 var ip = "127.0.0.1";
