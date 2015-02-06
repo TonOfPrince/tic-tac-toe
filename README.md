@@ -8,13 +8,13 @@ Brett Leibowitz
 
 ## Table of Contents
 
-1. [Author](#Author)
-1. [Usage](#Usage)
-1. [Requirements](#Requirements)
-1. [Development](#Development)
-    1. [Installing Dependencies](#Installing-Dependencies)
-    1. [Roadmap](#Roadmap)
-1. [Contributing](#Contributing)
+1. [Author](#1uthor)
+1. [Usage](#usage)
+1. [Requirements](#requirements)
+1. [Development](#development)
+    1. [Installing Dependencies](#installing-dependencies)
+    1. [Roadmap](#roadmap)
+1. [Contributing](#contributing)
 
 ## Usage
 
