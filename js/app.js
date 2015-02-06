@@ -20,8 +20,10 @@ var ticTacToe = angular.module('ticTacToeApp', [
     // player's marker is put if game is on-going
     } else if (MainFactory.playerTurn && !$(event.target).hasClass('picked')) {
       MainFactory.playerTurn = false;
+      console.log($(event.target))
       MainFactory.board[MainFactory.mappingRow[$(event.target).context.id]][MainFactory.mappingColumn[$(event.target).context.id]] = 1;
       $(event.target).children().text('X');
+      $(event.target).addClass('picked');
       MainFactory.decisionSimultaion();
       MainFactory.playerTurn = true;
     }

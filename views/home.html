@@ -3,15 +3,33 @@
 <div class="result" ng-show="computerWins()">You Lose!</div>
 <div class="result" ng-show="tie()">It's a Tie!</div>
 <div class="board">
-    <div class="square" id="topLeft" ng-click="playerMove($event)"><i></i></div>
-    <div class="square" id="topMiddle" ng-click="playerMove($event)"><i></i></div>
-    <div class="square" id="topRight" ng-click="playerMove($event)"><i></i></div>
-    <div class="square" id="middleLeft" ng-click="playerMove($event)"><i></i></div>
-    <div class="square" id="middleMiddle" ng-click="playerMove($event)"><i></i></div>
-    <div class="square" id="middleRight" ng-click="playerMove($event)"><i></i></div>
-    <div class="square" id="bottomLeft" ng-click="playerMove($event)"><i></i></div>
-    <div class="square" id="bottomMiddle" ng-click="playerMove($event)"><i></i></div>
-    <div class="square" id="bottomRight" ng-click="playerMove($event)"><i></i></div>
+    <div class="square" id="topLeft" ng-click="playerMove($event)">
+      <i class="picked"></i>
+    </div>
+    <div class="square" id="topMiddle" ng-click="playerMove($event)">
+      <i class="picked"></i>
+    </div>
+    <div class="square" id="topRight" ng-click="playerMove($event)">
+      <i class="picked"></i>
+    </div>
+    <div class="square" id="middleLeft" ng-click="playerMove($event)">
+      <i class="picked"></i>
+    </div>
+    <div class="square" id="middleMiddle" ng-click="playerMove($event)">
+      <i class="picked"></i>
+    </div>
+    <div class="square" id="middleRight" ng-click="playerMove($event)">
+      <i class="picked"></i>
+    </div>
+    <div class="square" id="bottomLeft" ng-click="playerMove($event)">
+      <i class="picked"></i>
+    </div>
+    <div class="square" id="bottomMiddle" ng-click="playerMove($event)">
+      <i class="picked"></i>
+    </div>
+    <div class="square" id="bottomRight" ng-click="playerMove($event)">
+      <i class="picked"></i>
+    </div>
 </div>
 <button class="newGame" ng-click="resetBoard()">
   New Game
