@@ -21,6 +21,9 @@ Brett Leibowitz
 ## Requirements
 
 - Node 0.10.x
+- npm
+
+## Development
 
 ### Installing Dependencies
 
