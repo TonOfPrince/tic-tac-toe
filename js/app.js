@@ -1,51 +1,22 @@
+/* Unbeatable Tic-Tac-Toe Module */
+
 var ticTacToe = angular.module('ticTacToeApp', [
     'ui.router'
   ])
+
+/* Unbeatable Tic-Tac-Toe Controller */
+
 .controller('MainCtrl', function($scope, MainFactory) {
 
-  // extends factory to the scope
+  // extends factory returned functions to the scope
   angular.extend($scope, MainFactory);
 
-  /* Functions Called in HTML */
-
-  // action for human player making a move
-  $scope.playerMove = function(event) {
-    // if the game is over, player cannot choose a space
-    if (MainFactory.gameOver()) {
-      for (var i = 0; i < MainFactory.board[0].length; i++) {
-        for (var j= 0; j < MainFactory.board.length; j++) {
-          $(MainFactory.mappingObject[i +','+j]).addClass('picked');
-        }
-      }
-    // player's marker is put if game is on-going
-    } else if (MainFactory.playerTurn && !$(event.target).hasClass('picked')) {
-      MainFactory.playerTurn = false;
-      console.log($(event.target))
-      MainFactory.board[MainFactory.mappingRow[$(event.target).context.id]][MainFactory.mappingColumn[$(event.target).context.id]] = 1;
-      $(event.target).children().text('X');
-      $(event.target).addClass('picked');
-      MainFactory.decisionSimultaion();
-      MainFactory.playerTurn = true;
-    }
-  }
-
-  // clears the board for a new game
-  $scope.resetBoard = function() {
-    $('i').text('');
-    for (var i = 0; i < MainFactory.board[0].length; i++) {
-      for (var j= 0; j < MainFactory.board.length; j++) {
-        $(MainFactory.mappingObject[i +','+j]).removeClass('picked');
-        MainFactory.board[i][j] = 0;
-      }
-    }
-  }
-
-  // checks to see if there is a tie
-  $scope.tie = function () {
-    return MainFactory.fullBoard() && !MainFactory.computerWins();
-  }
-
+  // resets board every time the page is entered
+  $scope.resetBoard();
 })
+
+/* Unbeatable Tic-Tac-Toe Factory */
+
 .factory('MainFactory', function() {
 
   /* Initializing Variables */
@@ -60,7 +31,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
     [0,0,0]
   ];
 
-/* Mapping Objects */
+  /* Mapping Objects */
 
   // map board's squares to display
   var mappingObject = {
@@ -129,21 +100,21 @@ var ticTacToe = angular.module('ticTacToeApp', [
 
   // determines if the computer player has won
   var computerWins = function() {
-    // computer player wins by having all three spaces in top
+        // computer player wins by having all three spaces in top row
     if ((board[0][0] === 2 && board[0][1] === 2 && board[0][2] === 2) ||
-    // computer player wins by having all three spaces in middle
+        // computer player wins by having all three spaces in middle row
         (board[1][0] === 2 && board[1][1] === 2 && board[1][2] === 2) ||
-    // computer player wins by having all three spaces in bottom
+        // computer player wins by having all three spaces in bottom row
         (board[2][0] === 2 && board[2][1] === 2 && board[2][2] === 2) ||
-    // computer player wins by having all three spaces in left column
+        // computer player wins by having all three spaces in left column
         (board[0][0] === 2 && board[1][0] === 2 && board[2][0] === 2) ||
-    // computer player wins by having all three spaces in middle column
+        // computer player wins by having all three spaces in middle column
         (board[0][1] === 2 && board[1][1] === 2 && board[2][1] === 2) ||
-    // computer player wins by having all three spaces in right column
+        // computer player wins by having all three spaces in right column
         (board[0][2] === 2 && board[1][2] === 2 && board[2][2] === 2) ||
-    // computer player wins by having all three spaces in diagonal from top left to bottom right
+        // computer player wins by having all three spaces in diagonal from top left to bottom right
         (board[0][0] === 2 && board[1][1] === 2 && board[2][2] === 2) ||
-    // computer player wins by having all three spaces in diagonal from top right to bottom left
+        // computer player wins by having all three spaces in diagonal from top right to bottom left
         (board[0][2] === 2 && board[1][1] === 2 && board[2][0] === 2))
      {
       return true;
@@ -162,7 +133,7 @@ var ticTacToe = angular.module('ticTacToeApp', [
         board[1][2] !== 0 &&
         board[2][0] !== 0 &&
         board[2][1] !== 0 &&
-        board[2][2] !== 0 ) {
+        board[2][2] !== 0) {
       return true;
     }
     return false;
@@ -246,11 +217,10 @@ var ticTacToe = angular.module('ticTacToeApp', [
 
   // simulation for computer to decide which space to choose
   var decisionSimultaion = function() {
-    var row = -1;
-    var column = -1;
-    if (gameOver()) {
-      deactivateBoard();
-    } else {
+    if (!gameOver()) {
+      var row = -1;
+      var column = -1;
+      // calculates optimal move
       var max = Number.NEGATIVE_INFINITY;
       for (var i = 0; i < board[0].length; i++) {
         for (var j = 0; j < board.length; j++) {
@@ -272,40 +242,57 @@ var ticTacToe = angular.module('ticTacToeApp', [
           }
         }
       }
+      // adds marker to display and updates board
       computerSpaceToggle(row, column);
       $(mappingObject[row +','+column]).children().text('O');
-
       $(mappingObject[row +','+column]).addClass('picked');
     }
   }
 
-/* Reset Functions */
+  /* Functions Called From HTML */
 
-  // deactivates board, so human player cannot make moves
-  var deactivateBoard = function() {
+  // action for human player making a move
+  var playerMove = function(event) {
+    // player's marker is put if game is on-going, spaces are available, and it's the player's turn
+    if (playerTurn && !$(event.target).hasClass('picked') && !gameOver()) {
+      playerTurn = false;
+      board[mappingRow[$(event.target).context.id]][mappingColumn[$(event.target).context.id]] = 1;
+      $(event.target).children().text('X');
+      $(event.target).addClass('picked');
+      // computer's marker is determined and placed
+      decisionSimultaion();
+      playerTurn = true;
+    }
+  }
+
+  // clears the board for a new game
+  var resetBoard = function() {
+    $('i').text('');
     for (var i = 0; i < board[0].length; i++) {
       for (var j= 0; j < board.length; j++) {
-        $(mappingObject[i +','+j]).addClass('picked');
+        $(mappingObject[i +','+j]).removeClass('picked');
+        board[i][j] = 0;
       }
     }
+  }
+
+  // checks to see if there is a tie
+  var tie = function () {
+    return fullBoard() && !computerWins();
   }
 
   /* Factory Return */
 
   return {
-    board: board,
-    gameOver: gameOver,
-    playerTurn: playerTurn,
-    mappingRow: mappingRow,
-    mappingColumn: mappingColumn,
-    mappingObject: mappingObject,
-    decisionSimultaion: decisionSimultaion,
     computerWins: computerWins,
-    fullBoard: fullBoard
+    playerMove: playerMove,
+    resetBoard: resetBoard,
+    tie: tie
   }
 })
 
 /* Angular SPA Routing */
+
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
 
