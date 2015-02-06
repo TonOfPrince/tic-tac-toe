@@ -8,7 +8,7 @@ Brett Leibowitz
 
 ## Table of Contents
 
-1. [Author](#1uthor)
+1. [Author](#author)
 1. [Usage](#usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
